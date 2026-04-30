@@ -177,6 +177,20 @@ if ($mysqli->connect_error) {
             background: rgba(37, 99, 235, 0.06);
         }
 
+        .table-wrapper a {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: rgba(37, 99, 235, 0.1);
+            color: #1d4ed8;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .table-wrapper a:hover {
+            background: rgba(37, 99, 235, 0.18);
+        }
+
         .empty-state,
         .error {
             margin: 16px 0 0;
@@ -251,12 +265,13 @@ if ($mysqli->connect_error) {
                             <th>Date de naissance</th>
                             <th>Lieu de naissance</th>
                             <th>Poste</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php if (empty($teamMembers)): ?>
                             <tr>
-                                <td colspan="6" class="empty-state">Aucun membre de l'équipe trouvé.</td>
+                                <td colspan="7" class="empty-state">Aucun membre de l'équipe trouvé.</td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($teamMembers as $member): ?>
@@ -267,6 +282,7 @@ if ($mysqli->connect_error) {
                                     <td><?php echo htmlspecialchars($member['date_naissance'], ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td><?php echo htmlspecialchars($member['lieu_naissance'], ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td><?php echo htmlspecialchars($member['poste'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td><a href="modifier_membre.php?id=<?php echo intval($member['id']); ?>">Modifier</a></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
