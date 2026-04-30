@@ -177,38 +177,72 @@ if ($mysqli->connect_error) {
             background: rgba(37, 99, 235, 0.06);
         }
 
-        .table-wrapper a,
-        .table-wrapper button {
+        .action-dropdown {
+            position: relative;
+            display: inline-flex;
+        }
+
+        .dropdown-toggle {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 8px 12px;
+            padding: 8px 14px;
             border-radius: 12px;
             background: rgba(37, 99, 235, 0.1);
             color: #1d4ed8;
             text-decoration: none;
             font-weight: 700;
-            border: none;
+            border: 1px solid rgba(37, 99, 235, 0.2);
             cursor: pointer;
         }
 
-        .table-wrapper a:hover,
-        .table-wrapper button:hover {
+        .dropdown-toggle:hover {
             background: rgba(37, 99, 235, 0.18);
         }
 
-        .table-wrapper form {
-            display: inline-block;
-            margin: 0;
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            min-width: 180px;
+            padding: 8px 0;
+            border-radius: 14px;
+            background: #ffffff;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            z-index: 10;
         }
 
-        .table-wrapper button {
-            background: rgba(239, 68, 68, 0.08);
+        .action-dropdown.open .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-item,
+        .dropdown-item button {
+            display: block;
+            width: 100%;
+            padding: 10px 16px;
+            border: none;
+            background: transparent;
+            color: #111827;
+            text-align: left;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover,
+        .dropdown-item button:hover {
+            background: rgba(37, 99, 235, 0.08);
+        }
+
+        .dropdown-item.delete button {
             color: #b91c1c;
         }
 
-        .table-wrapper button:hover {
-            background: rgba(239, 68, 68, 0.16);
+        .table-wrapper form {
+            margin: 0;
         }
 
         .empty-state,
@@ -303,11 +337,16 @@ if ($mysqli->connect_error) {
                                     <td><?php echo htmlspecialchars($member['lieu_naissance'], ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td><?php echo htmlspecialchars($member['poste'], ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td>
-                                        <a href="modifier_membre.php?id=<?php echo intval($member['id']); ?>">Modifier</a>
-                                        <form action="supprimer_membre.php" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce membre ?');">
-                                            <input type="hidden" name="id" value="<?php echo intval($member['id']); ?>">
-                                            <button type="submit">Supprimer</button>
-                                        </form>
+                                        <div class="action-dropdown">
+                                            <button type="button" class="dropdown-toggle" onclick="toggleDropdown(this)">Actions</button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="modifier_membre.php?id=<?php echo intval($member['id']); ?>">Modifier</a>
+                                                <form action="supprimer_membre.php" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce membre ?');">
+                                                    <input type="hidden" name="id" value="<?php echo intval($member['id']); ?>">
+                                                    <button class="dropdown-item delete" type="submit">Supprimer</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -320,5 +359,25 @@ if ($mysqli->connect_error) {
             </div>
         </div>
     </div>
+    <script>
+        function toggleDropdown(button) {
+            var dropdown = button.closest('.action-dropdown');
+            var isOpen = dropdown.classList.contains('open');
+            document.querySelectorAll('.action-dropdown.open').forEach(function(el) {
+                el.classList.remove('open');
+            });
+            if (!isOpen) {
+                dropdown.classList.add('open');
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.action-dropdown')) {
+                document.querySelectorAll('.action-dropdown.open').forEach(function(el) {
+                    el.classList.remove('open');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
