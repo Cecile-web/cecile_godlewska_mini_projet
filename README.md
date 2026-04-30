@@ -8,6 +8,7 @@ Ce projet est une application PHP simple pour gérer l'accès à un tableau de b
 - `tableau_de_bord.php` : page protégée visible après authentification.
 - `ajouter_membre.php` : formulaire pour ajouter un nouveau membre.
 - `modifier_membre.php` : formulaire de modification des informations d'un membre.
+- `supprimer_membre.php` : script de suppression d'un membre depuis le tableau de bord.
 - `logout.php` : déconnexion de l'utilisateur.
 - `BDD/company_cecile (1).sql` : export SQL de la base de données.
 
@@ -45,7 +46,8 @@ Avant d'installer le projet, assurez-vous d'avoir :
 2. Une fois connecté, vous arriverez sur le `tableau_de_bord.php`.
 3. Pour ajouter un membre, utiliser `ajouter_membre.php`.
 4. Pour modifier un membre, cliquer sur le lien "Modifier" dans le tableau du `tableau_de_bord.php`.
-5. Pour se déconnecter, cliquer sur le lien ou accéder à `logout.php`.
+5. Pour supprimer un membre, cliquer sur "Supprimer" dans le tableau du `tableau_de_bord.php` et confirmer la pop-up.
+6. Pour se déconnecter, cliquer sur le lien ou accéder à `logout.php`.
 
 ## Remarques
 

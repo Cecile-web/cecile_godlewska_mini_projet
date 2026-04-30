@@ -177,18 +177,38 @@ if ($mysqli->connect_error) {
             background: rgba(37, 99, 235, 0.06);
         }
 
-        .table-wrapper a {
-            display: inline-block;
+        .table-wrapper a,
+        .table-wrapper button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding: 8px 12px;
             border-radius: 12px;
             background: rgba(37, 99, 235, 0.1);
             color: #1d4ed8;
             text-decoration: none;
             font-weight: 700;
+            border: none;
+            cursor: pointer;
         }
 
-        .table-wrapper a:hover {
+        .table-wrapper a:hover,
+        .table-wrapper button:hover {
             background: rgba(37, 99, 235, 0.18);
+        }
+
+        .table-wrapper form {
+            display: inline-block;
+            margin: 0;
+        }
+
+        .table-wrapper button {
+            background: rgba(239, 68, 68, 0.08);
+            color: #b91c1c;
+        }
+
+        .table-wrapper button:hover {
+            background: rgba(239, 68, 68, 0.16);
         }
 
         .empty-state,
@@ -282,7 +302,13 @@ if ($mysqli->connect_error) {
                                     <td><?php echo htmlspecialchars($member['date_naissance'], ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td><?php echo htmlspecialchars($member['lieu_naissance'], ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td><?php echo htmlspecialchars($member['poste'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                    <td><a href="modifier_membre.php?id=<?php echo intval($member['id']); ?>">Modifier</a></td>
+                                    <td>
+                                        <a href="modifier_membre.php?id=<?php echo intval($member['id']); ?>">Modifier</a>
+                                        <form action="supprimer_membre.php" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce membre ?');">
+                                            <input type="hidden" name="id" value="<?php echo intval($member['id']); ?>">
+                                            <button type="submit">Supprimer</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
